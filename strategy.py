@@ -16,22 +16,26 @@ class diffStrategy(alternativeStrategy):
     def __init__(self):
         pass
 
-    def execute(self, images):
-        image1 = images[0]
-        image2 = images[1]
+    def execute(self, imageContainer):
+        # get the original image list from imageContainer
+        images = imageContainer.get("Original")
+        [image1, image2] = [images[0], images[-1]]
         # Calculate difference
         self.diffImage = cv2.absdiff (image1, image2)
-        return self.diffImage
+        #return self.diffImage
+        imageContainer.insert({"Process": self.diffImage})
 
 # Define image blur 
 class blurStrategy(alternativeStrategy):
     def __init__(self):
         self.blurSetting=(3,3)
 
-    def execute(self, images):
+    def execute(self, imageContainer):
+        image = imageContainer.pop("Process")
         # Blur the image
-        self.blurImage = cv2.blur(images[0], self.blurSetting)
-        return self.blurImage
+        self.blurImage = cv2.blur(image, self.blurSetting)
+        #return self.blurImage
+        imageContainer.insert({"Process": self.blurImage})
 
 # Define image threshod 
 class thresStrategy(alternativeStrategy):
@@ -39,10 +43,12 @@ class thresStrategy(alternativeStrategy):
         self.thresValue = 32
         self.thresMaxVal = 255
 
-    def execute(self, images):
+    def execute(self, imageContainer):
+        image = imageContainer.pop("Process")
         # Apply threshold (enhanced)
-        ret, self.thresImage = cv2.threshold(images[0], self.thresValue, self.thresMaxVal, cv2.THRESH_BINARY)
-        return self.thresImage
+        ret, self.thresImage = cv2.threshold(image, self.thresValue, self.thresMaxVal, cv2.THRESH_BINARY)
+        #return self.thresImage
+        imageContainer.insert({"Process": self.thresImage})
 
 
 if __name__ == "__main__":
@@ -55,22 +61,23 @@ if __name__ == "__main__":
     strategyList.append ( blurStrategy() )
     strategyList.append ( thresStrategy() )
 
-    # Capture a image
-    ret, image1 = cam.read()
+    # Using container to store images
+    from container import dataContainer
+    imgContainer = dataContainer()
 
-    cv2.imshow ("Image Test", image1)
-    cv2.waitKey(1000)
+    # Store initial n images to image container
+    for i in range(5):
+        # Capture a image
+        ret, image = cam.read()
+        imgContainer.insert ({"Original": image.copy() })
+        cv2.imshow ("Image original", image )
+        cv2.waitKey(50)
 
-    # Capture another image
-    ret, image2 = cam.read()
-
-    # Processing image
-    processImage = [image1, image2]
     for strategy in strategyList:
-        processImage.insert (0, strategy.execute(processImage) )
+        strategy.execute(imgContainer)
 
-    cv2.imshow ("Image process", processImage[0])
-    cv2.waitKey(1000)
+    cv2.imshow ("Image process", imgContainer.pop("Process") )
+    cv2.waitKey(2000)
 
     cv2.destroyAllWindows()
 
