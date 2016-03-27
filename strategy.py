@@ -54,6 +54,7 @@ class thresStrategy(alternativeStrategy):
 class strategyConstructor():
     def __init__(self):
         self.strategyList = []
+        # Actually these strategies are the basic operation of motion detection
         self.strategyList.append ( diffStrategy() )
         self.strategyList.append ( blurStrategy() )
         self.strategyList.append ( thresStrategy() )
