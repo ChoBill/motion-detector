@@ -50,16 +50,23 @@ class thresStrategy(alternativeStrategy):
         #return self.thresImage
         imageContainer.insert({"Process": self.thresImage})
 
+# Constuctor of these strategies above
+class strategyConstructor():
+    def __init__(self):
+        self.strategyList = []
+        self.strategyList.append ( diffStrategy() )
+        self.strategyList.append ( blurStrategy() )
+        self.strategyList.append ( thresStrategy() )
+
+    def listStrategy(self):
+        return self.strategyList
 
 if __name__ == "__main__":
     from camera import camera
     cam = camera()
 
     # Construce the strategies object
-    strategyList = []
-    strategyList.append ( diffStrategy() )
-    strategyList.append ( blurStrategy() )
-    strategyList.append ( thresStrategy() )
+    strategyConstruction = strategyConstructor()
 
     # Using container to store images
     from container import dataContainer
@@ -73,7 +80,7 @@ if __name__ == "__main__":
         cv2.imshow ("Image original", image )
         cv2.waitKey(50)
 
-    for strategy in strategyList:
+    for strategy in strategyConstruction.listStrategy():
         strategy.execute(imgContainer)
 
     cv2.imshow ("Image process", imgContainer.pop("Process") )
