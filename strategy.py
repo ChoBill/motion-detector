@@ -52,8 +52,8 @@ class thresStrategy(alternativeStrategy):
 
 # Define find contours strategy
 class findContoursStrategy(alternativeStrategy):
-    def __init__(self):
-        pass
+    def __init__(self, alarm):
+        self.alarm = alarm
 
     def execute(self, imageContainer):
         image = imageContainer.pop("Process")
@@ -67,6 +67,8 @@ class findContoursStrategy(alternativeStrategy):
             # Filter out the small boundaries
             if w*h > 225:
                 cv2.rectangle(image, (x,y), (x+w,y+h), (0,255,0), 2)
+                # Enable alarm
+                self.alarm.set()
                 # Record the max contour
                 if w*h > max_contours:
                     max_contours = w*h
@@ -75,13 +77,13 @@ class findContoursStrategy(alternativeStrategy):
 
 # Constuctor of these strategies above
 class strategyConstructor():
-    def __init__(self):
+    def __init__(self, alarm):
         self.strategyList = []
         # Actually these strategies are the basic operation of motion detection
         self.strategyList.append ( diffStrategy() )
         self.strategyList.append ( blurStrategy() )
         self.strategyList.append ( thresStrategy() )
-        self.strategyList.append ( findContoursStrategy() )
+        self.strategyList.append ( findContoursStrategy(alarm) )
 
     def listStrategy(self):
         return self.strategyList

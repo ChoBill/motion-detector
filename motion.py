@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 
-# Parsing command parameters and generate parameter dictionary
-pass
-
 # Construct the camera capture object
 from camera import camera
 cam = camera()
@@ -11,12 +8,13 @@ cam = camera()
 from container import dataContainer
 imgContainer = dataContainer()
 
+# Contruct a alarm object
+from alarm import alarm
+eventAlarm = alarm()
+
 # Construct the image processing strategy
 from strategy import strategyConstructor
-strategyConstruction = strategyConstructor()
-
-# Construct the iterator contains the camera object and strategy
-pass
+strategyConstruction = strategyConstructor(eventAlarm)
 
 # Run the program
 if __name__ == "__main__":
@@ -29,6 +27,9 @@ if __name__ == "__main__":
         imgContainer.insert ({"Original": image })
 
     while True:
+        # reset alarm
+        eventAlarm.reset()
+
         # Runing the image process strategies
         for strategy in strategyConstruction.listStrategy():
             strategy.execute(imgContainer)
@@ -37,6 +38,10 @@ if __name__ == "__main__":
         cv2.imshow ("Original Image", imgContainer.pop("Original") )
         cv2.imshow ("Image process", imgContainer.pop("Process") )
         cv2.waitKey(20)
+
+        # Check alarm
+        if eventAlarm.isalarm():
+            eventAlarm.alarm()
 
         # Capture new image
         ret, image = cam.read()
