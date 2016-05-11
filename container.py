@@ -1,14 +1,24 @@
 #!/usr/bin/env python
 
-# The dataContainer store key value pairs.
-# The value always store in a list
-# If a key exists, then the values will extend the list.
 class dataContainer:
+    '''
+    The dataContainer store key value pairs.
+    The value always store in a list
+    If a key exists, then the values will extend the list.
+    '''
     def __init__(self):
+        '''
+        Initial the data container
+        '''
         self.container = {}
 
-    # insert the dictionary data to the container
-    def insert(self, data ):
+    def insert(self, data):
+        '''
+        Insert the dictionary data to the container
+        If the key already in the dict, save the values in a list
+        Args:
+            data: {key: value}
+        '''
         for key in data.keys():
             value = data.get(key)
             # Check if the key exist in the container
@@ -19,16 +29,32 @@ class dataContainer:
                 # Always save the value in a list
                 self.container.update ({key: [value]})
 
-    # Return the list of value according to the key
-    def get(self, key ):
+    def get(self, key):
+        '''
+        Return the list of value according to the key
+        Args:
+            key: keyword
+        Returns:
+            list of the value
+        '''
         return self.container.get(key)
 
-    # Return all items in the container
     def items(self):
+        '''
+        Return all items in the container
+        Return:
+            Dictionary of all data
+        '''
         return self.container.items()
 
-    # Return the value according to the key, and delete the key/value
-    def pop(self, key ):
+    def pop(self, key):
+        '''
+        Return the value according to the key, and delete the key/value
+        Args:
+            key: keyword
+        Returns:
+            list of the value
+        '''
         value = self.container.get(key)
         # The value is a list, pop the last item of the list
         item = value.pop()
@@ -39,6 +65,11 @@ class dataContainer:
 
     # return all keys in the container
     def keys(self):
+        '''
+        Return all keys in the container
+        Return:
+            keywords
+        '''
         return self.container.keys() 
 
 if __name__ == "__main__":

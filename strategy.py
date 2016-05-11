@@ -2,8 +2,10 @@
 
 import cv2
 
-# Define a template for alternative strategy
 class alternativeStrategy(object):
+    '''
+    A template strategy
+    '''
     def __init__(self):
         pass
 
@@ -11,8 +13,10 @@ class alternativeStrategy(object):
         print("Please implement an execution method." )
 
 # Define each image process strategy
-# Define image difference strategy
 class diffStrategy(alternativeStrategy):
+    '''
+    Compare difference of images
+    '''
     def __init__(self):
         pass
 
@@ -25,8 +29,10 @@ class diffStrategy(alternativeStrategy):
         # save the processed image
         imageContainer.insert({"Process": self.diffImage})
 
-# Define image blur strategy
 class blurStrategy(alternativeStrategy):
+    '''
+    Apply blur to the image
+    '''
     def __init__(self):
         self.blurSetting=(3,3)
 
@@ -37,8 +43,10 @@ class blurStrategy(alternativeStrategy):
         # save the processed image
         imageContainer.insert({"Process": self.blurImage})
 
-# Define image threshod strategy
 class thresStrategy(alternativeStrategy):
+    '''
+    Apply threshold to the image
+    '''
     def __init__(self):
         self.thresValue = 32
         self.thresMaxVal = 255
@@ -50,8 +58,10 @@ class thresStrategy(alternativeStrategy):
         # save the processed image
         imageContainer.insert({"Process": self.thresImage})
 
-# Define find contours strategy
 class findContoursStrategy(alternativeStrategy):
+    '''
+    Find contour and set alarm if needed
+    '''
     def __init__(self, alarm):
         self.alarm = alarm
 
@@ -75,8 +85,10 @@ class findContoursStrategy(alternativeStrategy):
         # save the processed image
         imageContainer.insert({"Process": image})
 
-# Constuctor of these strategies above
 class strategyConstructor():
+    '''
+    Constuctor of these image processing strategies
+    '''
     def __init__(self, alarm):
         self.strategyList = []
         # Actually these strategies are the basic operation of motion detection
