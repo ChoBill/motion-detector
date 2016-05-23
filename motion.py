@@ -49,6 +49,11 @@ class motion():
             # Check alarm
             if self.eventAlarm.isalarm():
                 self.eventAlarm.alarm()
+            # Get keyboard input
+            input_ch = self.getKeyboard()
+            # Check if 'ESC'
+            if (input_ch == 27):
+                break
             # Capture new image
             self.fetchImage()
         # Close window and exit the program
@@ -68,10 +73,15 @@ class motion():
         if (self._isGUI()):
             cv2.imshow ("Original Image", self.imgContainer.pop("Original") )
             cv2.imshow ("Image process", self.imgContainer.pop("Process") )
-            cv2.waitKey(20)
         else:
             self.imgContainer.pop("Original")
             self.imgContainer.pop("Process")
+
+    def getKeyboard(self):
+        '''
+        Return keyboard input
+        '''
+        return 0xFF & cv2.waitKey(1)
 
     def closeWindow(self):
         '''
