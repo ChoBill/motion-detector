@@ -71,8 +71,16 @@ class motion():
         Display the images
         '''
         if (self._isGUI()):
-            cv2.imshow ("Original Image", self.imgContainer.pop("Original") )
-            cv2.imshow ("Image process", self.imgContainer.pop("Process") )
+            import numpy as np
+            # concatenate two images horizontally
+            vis = np.concatenate( \
+                    (self.imgContainer.pop("Original") , self.imgContainer.pop("Process") ), \
+                    axis=1)
+            cv2.namedWindow("Image", cv2.WND_PROP_FULLSCREEN) 
+            # Set fullscreen window
+            cv2.setWindowProperty("Image", cv2.WND_PROP_FULLSCREEN, cv2.cv.CV_WINDOW_FULLSCREEN)
+            # Show image
+            cv2.imshow ("Image", vis)
         else:
             self.imgContainer.pop("Original")
             self.imgContainer.pop("Process")
