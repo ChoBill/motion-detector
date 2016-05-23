@@ -1,15 +1,20 @@
 # motion detect
 Using the OpenCV 2 library to implement the motion detector.
 This program capture images from camera and analysis the images.
-If motion detected, the alarm will be displayed.
+If motion detected, the alarm will be triggered.
 
 # Quick Start
 > Requirements:
 > * python-opencv
 
-Run the test server:
+Run the motion detector:
 ```
 python motion.py 
+```
+
+Exit the program
+```
+Press 'ESC'
 ```
 
 # License
