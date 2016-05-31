@@ -6,6 +6,7 @@ If motion detected, the alarm will be triggered.
 # Quick Start
 > Requirements:
 > * python-opencv
+> * aplay
 
 Run the motion detector:
 ```
