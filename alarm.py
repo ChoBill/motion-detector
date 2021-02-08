@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python3 
 
 from datetime import datetime
 import os 
@@ -33,9 +33,9 @@ class alarm():
         '''
         self.status = True
 
-    def isalarm(self):
+    def isalarmHysteresis(self):
         '''
-        Retrun the alarm status
+        Retrun the alarm status with delay
         Returns:
             [True|False]
         '''
@@ -48,11 +48,20 @@ class alarm():
                 return True
         return False
 
+    def isalarm(self):
+        '''
+        Retrun the alarm status
+        Returns:
+            [True|False]
+
+        '''
+        return self.status
+
     def alarm(self):
         '''
         Playing the alarm voice
         '''
-        print "alarm..."
+        print ("alarm...")
         alarmCMD = "aplay " + self.alarmAudioFile + " &"
         os.system ( alarmCMD )
         pass

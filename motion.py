@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import cv2
 
@@ -47,7 +47,7 @@ class motion():
             # Display image
             self.showImage()
             # Check alarm
-            if self.eventAlarm.isalarm():
+            if self.eventAlarm.isalarmHysteresis():
                 self.eventAlarm.alarm()
             # Get keyboard input
             input_ch = self.getKeyboard()
@@ -76,9 +76,7 @@ class motion():
             vis = np.concatenate( \
                     (self.imgContainer.pop("Original") , self.imgContainer.pop("Process") ), \
                     axis=1)
-            cv2.namedWindow("Image", cv2.WND_PROP_FULLSCREEN) 
-            # Set fullscreen window
-            cv2.setWindowProperty("Image", cv2.WND_PROP_FULLSCREEN, cv2.cv.CV_WINDOW_FULLSCREEN)
+            cv2.namedWindow("Image", cv2.WINDOW_GUI_NORMAL) 
             # Show image
             cv2.imshow ("Image", vis)
         else:
@@ -107,7 +105,7 @@ class motion():
             [True|False]: X11 DISPLAY exist or not
         '''
         import os
-        return os.environ.has_key('DISPLAY')
+        return ('DISPLAY' in os.environ )
 
     def _isGUI(self):
         '''

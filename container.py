@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 class dataContainer:
     '''
@@ -22,7 +22,7 @@ class dataContainer:
         for key in data.keys():
             value = data.get(key)
             # Check if the key exist in the container
-            if self.container.has_key ( key ):
+            if key in self.container:
                 oriValue = self.container.get(key)
                 oriValue.insert (0, value)
             else:
@@ -74,6 +74,7 @@ class dataContainer:
 
 if __name__ == "__main__":
     c = dataContainer()
+    # testing
     c.insert ({'List' : [1,2,3]})
     c.insert ({'List' : "123"})
     l = [2,3,4]
@@ -82,15 +83,15 @@ if __name__ == "__main__":
     c.insert ({'a' : 1})
     c.insert ({'b' : 2})
 
-    print c.items()
-    print c.get('List')
-    print c.pop('List')
-    print c.items()
-    print c.pop('List')
-    print c.items()
-    print c.get('a')
-    print c.pop('a')
-    print c.pop('List')
-    print c.pop('List')
-    print c.items()
-    print c.keys()
+    print ( c.items() )
+    print ( c.get('List') )
+    print ( c.pop('List') )
+    print ( c.items() )
+    print ( c.pop('List') )
+    print ( c.items() )
+    print ( c.get('a') )
+    print ( c.pop('a') )
+    print ( c.pop('List') )
+    print ( c.pop('List') )
+    print ( c.items() )
+    print ( c.keys() )

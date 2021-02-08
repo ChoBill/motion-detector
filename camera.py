@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import cv2
 
@@ -12,7 +12,7 @@ class camera():
         '''
         self.device = device
         self.image_size = image_size
-        self.cam = cv2.VideoCapture(device)
+        self.cam = cv2.VideoCapture(self.device)
 
     def read(self):
         '''
